@@ -5,9 +5,5 @@
     <x-layouts.header />
 
     {{ $slot }}
-    <footer>
-        <a href="#">linka </a>
-        {{ $footerLinks }}☻
-    </footer>
 
 </x-base-layout>
