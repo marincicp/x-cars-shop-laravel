@@ -19,7 +19,7 @@ class Maker extends EloquentModel
         return $this->hasMany(Car::class);
     }
 
-    public function model(): HasMany
+    public function models(): HasMany
     {
         return $this->hasMany(Model::class);
     }

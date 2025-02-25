@@ -49,7 +49,7 @@ class Car extends Model
     }
 
 
-    public function favoritedUsers(): BelongsToMany
+    public function favoritedCars(): BelongsToMany
     {
         return $this->belongsToMany(User::class, "favorite_cars");
     }
