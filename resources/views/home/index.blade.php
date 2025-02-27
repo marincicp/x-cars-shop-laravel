@@ -9,18 +9,12 @@
             <div class="container">
                 <h2>Latest Added Cars</h2>
                 <div class="car-items-listing">
-                    @php
-                        $car = [
-                            'location' => 'New York',
-                            'price' => '30,000',
-                            'type' => 'SUV',
-                            'year' => 2020,
-                            'model' => 'Mazda',
-                        ];
-                    @endphp
-                    @for ($i = 1; $i < 12; $i++)
+
+                    @foreach ($cars as $car)
                         <x-car-item :$car />
-                    @endfor
+                    @endforeach
+
+
                 </div>
             </div>
         </section>
