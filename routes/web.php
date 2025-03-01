@@ -18,3 +18,11 @@ Route::get("/car/search", [CarController::class, "search"])->name("car.search");
 Route::get("/car/watchlist", [CarController::class, "watchlist"])->name("car.watchlist");
 
 Route::resource("car", CarController::class);
+
+
+
+
+/// API
+Route::get("/makers/{maker_id}/models", [ModelApiController::class, "getModelsByMaker"]);
+
+Route::get("/states/{state_id}/cities", [CityApiController::class, "getCitiesByState"]);

@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
+
+    private array $dropdownCachedData;
+    public function __construct()
+    {
+        $this->dropdownCachedData = DropdownController::getDropdownData();
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -67,7 +75,7 @@ class CarController extends Controller
         //
     }
 
-    public function search()
+    public function search(Request $request)
     {
         $query = Car::select("cars.*")->with("model", "maker", "carType", "primaryImage", "city", "fuelType")->where("published_at", "<", now())->orderBy("published_at", "desc");
 
@@ -75,7 +83,7 @@ class CarController extends Controller
 
         return view(
             "car.search",
-            ["cars" => $cars]
+            array_merge(["cars" => $cars], $this->dropdownCachedData)
         );
     }
 
