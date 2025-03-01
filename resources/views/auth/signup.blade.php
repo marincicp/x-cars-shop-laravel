@@ -1,28 +1,18 @@
 <x-guest-layout title="Signup" bodyClass="page-signup">
 
 
-    <form action="{{ route('register') }}" method="post">
-        @csrf
-        <div class="form-group">
-            <input name="email" type="email" placeholder="Your Email" />
-        </div>
-        <div class="form-group">
-            <input name="password" type="password" placeholder="Your Password" />
-        </div>
-        <div class="form-group">
-            <input name="password_confirmation" type="password" placeholder="Repeat Password" />
-        </div>
-        <hr />
-        <div class="form-group">
-            <input name="firstName" type="text" placeholder="First Name" />
-        </div>
-        <div class="form-group">
-            <input name="lastName" type="text" placeholder="Last Name" />
-        </div>
-        <div class="form-group">
-            <input name="phone" type="text" placeholder="Phone" />
-        </div>
-        <button class="btn btn-primary btn-login w-full">Register</button>
+    <x-form action="{{ route('register') }}" method="post">
+        <x-form.input type="email" name="email" placeholder="Your Email" marginB />
+
+        <x-form.input type="password" name="password" placeholder="Your Password" marginB />
+
+        <x-form.input type="password" name="password_confirmation" placeholder="Repeat Password" marginB />
+
+        <x-form.input name="firstName" placeholder="First Name" marginB />
+        <x-form.input name="lastName" placeholder="Last Name" marginB />
+        <x-form.input name="phone" placeholder="Phone" marginB />
+
+        <x-form.button>Register</x-form.button>
 
         <div class="grid grid-cols-2 gap-1 social-auth-buttons">
             <x-google-button />
@@ -32,6 +22,6 @@
             Already have an account? -
             <a href="{{ route('login') }}"> Click here to login </a>
         </div>
-    </form>
+    </x-form>
 
 </x-guest-layout>
