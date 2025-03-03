@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\QueryFilter;
 use App\Models\Car;
 use App\Models\User;
 use Illuminate\Http\Request;
+
 
 class CarController extends Controller
 {
@@ -21,6 +23,7 @@ class CarController extends Controller
      */
     public function index()
     {
+
         // TODO
         $cars = User::find(1)->cars()->with(["primaryImage", "model", "maker"])->orderBy("created_at", "desc")->paginate(15);
 
@@ -77,7 +80,9 @@ class CarController extends Controller
 
     public function search(Request $request)
     {
-        $query = Car::select("cars.*")->with("model", "maker", "carType", "primaryImage", "city", "fuelType")->where("published_at", "<", now())->orderBy("published_at", "desc");
+        $query = Car::select("cars.*")->with("model", "maker", "carType", "primaryImage", "city", "fuelType")->where("published_at", "<", now());
+
+        $query = QueryFilter::apply($query, $request);
 
         $cars = $query->paginate(15);
 
