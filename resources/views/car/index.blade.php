@@ -64,8 +64,13 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" clss="text-center p-large">You don't have car yet <a
-                                                href="{{ route('car.create') }}">Add new car</a></td>
+                                        <td colspan="5" clss="text-center p-medium">
+                                            <p class="text-center ">
+                                                You don't
+                                                have car yet. <a class="ml-medium" href="{{ route('car.create') }}">Add
+                                                    new car</a>
+                                        </td>
+                                        </p>
                                     </tr>
                                 @endforelse
 

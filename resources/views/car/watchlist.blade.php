@@ -21,6 +21,9 @@
                        @forelse ($cars as $car)
                            <x-car-item :$car isInWatchList />
                        @empty
+
+                           <p class=" card text-center  grid-span-1-3 p-medium">You don't have any favorite
+                               cars yet.</p>
                        @endforelse
 
                    </div>
