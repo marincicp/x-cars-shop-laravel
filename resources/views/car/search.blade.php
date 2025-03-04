@@ -100,9 +100,12 @@
 
                     <div class="search-cars-results">
                         <div class="car-items-listing">
-                            @foreach ($cars as $car)
+                            @forelse ($cars as $car)
                                 <x-car-item :$car />
-                            @endforeach
+                            @empty
+
+                                <p class=" card text-center  grid-span-1-3 p-medium">No cars found for that filter.</p>
+                            @endforelse
                         </div>
 
                         {{ $cars->onEachSide(1)->links() }}
