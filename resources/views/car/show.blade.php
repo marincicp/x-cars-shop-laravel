@@ -9,13 +9,13 @@
                 <div class="car-images-and-description">
                     <div class="car-images-carousel">
                         <div class="car-image-wrapper">
-                            <img src="{{ $car->primaryImage->image_path }}" alt="" class="car-active-image"
-                                id="activeImage" />
+                            <img src="{{ asset('storage/' . $car->primaryImage->image_path) }}" alt=""
+                                class="car-active-image" id="activeImage" />
                         </div>
                         <div class="car-image-thumbnails">
 
                             @foreach ($car->images as $image)
-                                <img src="{{ $image->image_path }}" alt="" />
+                                <img src= " {{ asset('storage/' . $image->image_path) }}" alt="" />
                             @endforeach
 
                         </div>

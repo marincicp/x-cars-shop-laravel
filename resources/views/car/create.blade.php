@@ -43,7 +43,7 @@ if ($errors->any()) {
                                 @foreach ($carTypes as $type)
                                     <div class="col">
                                         <label class="inline-radio">
-                                            <input type="radio" name="car_type" value="{{ $type->id }} "
+                                            <input type="radio" name="car_type_id" value="{{ $type->id }} "
                                                 {{ old('car_type') == $type->id ? 'checked' : '' }} />
                                             {{ $type->name }}
                                         </label>
@@ -76,7 +76,7 @@ if ($errors->any()) {
                                 @foreach ($fuelTypes as $type)
                                     <div class="col">
                                         <label class="inline-radio">
-                                            <input type="radio" name="fuel_type" value="{{ $type->id }}"
+                                            <input type="radio" name="fuel_type_id" value="{{ $type->id }}"
                                                 {{ old('fuel_type') == $type->id ? 'checked' : '' }} />
                                             {{ $type->name }}
                                         </label>
