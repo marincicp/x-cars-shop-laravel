@@ -4,6 +4,7 @@
     <option value="">State/Region</option>
 
     @foreach ($states as $state)
-        <option value="{{ $state->id }}">{{ $state->name }}</option>
+        <option {{ old('state_id') == $state->id ? 'selected' : '' }} value="{{ $state->id }}">{{ $state->name }}
+        </option>
     @endforeach
 </x-form.select>

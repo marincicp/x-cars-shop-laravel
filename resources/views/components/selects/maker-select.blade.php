@@ -4,6 +4,7 @@
     <option value="">Maker</option>
 
     @foreach ($makers as $maker)
-        <option value="{{ $maker->id }}">{{ $maker->name }}</option>
+        <option {{ old('maker_id') == $maker->id ? 'selected' : '' }} value="{{ $maker->id }}">{{ $maker->name }}
+        </option>
     @endforeach
 </x-form.select>
