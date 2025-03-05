@@ -15,7 +15,7 @@ class CarFeatures extends Model
     public $timestamps = false;
 
 
-
+    protected $guarded = [];
 
     public function car(): BelongsTo
     {
