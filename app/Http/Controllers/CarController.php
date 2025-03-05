@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\CarFeatures;
 use App\Http\Repositories\CarRepository;
+use App\Http\Requests\StoreCarRequest;
 use App\Models\Car;
 use Illuminate\Http\Request;
 
@@ -35,15 +37,19 @@ class CarController extends Controller
      */
     public function create(Request $request)
     {
-        return view("car.create");
+        return view("car.create", array_merge($this->dropdownCachedData, ["carFeatures" => CarFeatures::FEATURES]));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCarRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $car = $this->carRepo->createCar($validatedData);
+
+        return view("car.show", ["car" => $car]);
     }
 
     /**
