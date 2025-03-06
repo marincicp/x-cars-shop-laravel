@@ -36,7 +36,6 @@ class CarFeatureRequest extends FormRequest
             "car_features.*" =>  [
                 function ($attribute, $value, $fail) {
                     $column = Str::afterLast($attribute, '.');
-                    dump($column, $value);
                     if (! Schema::hasColumn("car_features", $column)) {
                         $fail("The $column does not exist");
                     }
