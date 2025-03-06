@@ -147,7 +147,7 @@ if ($errors->any()) {
                 <div class="p-medium" style="width: 100%">
                     <div class="flex justify-end gap-1">
                         <button type="button" class="btn btn-default">Reset</button>
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary submit-btn" data-single-click>Submit</button>
                     </div>
                 </div>
             </form>
