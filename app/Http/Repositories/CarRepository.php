@@ -11,6 +11,25 @@ use Illuminate\Support\Facades\Auth;
 class CarRepository
 {
 
+   public  function createCar($data)
+   {
+      $car = Auth::user()->cars()->create($data);
+
+      foreach ($data["images"] as $index => $img) {
+         $imgPath = $img->store("carImages");
+         $car->images()->create([
+            "image_path" => $imgPath,
+            "position" => $index + 1
+         ]);
+      }
+
+      if (!empty($data["car_features"])) {
+         $car->features()->create($data["car_features"]);
+      }
+
+      return $car;
+   }
+
 
    /**
     * Get a list of cars that the current user has added

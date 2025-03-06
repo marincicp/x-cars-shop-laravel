@@ -15,8 +15,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Car extends EloquentModel
 {
     use HasFactory, SoftDeletes;
-    protected $guarded = [];
 
+    protected $fillable = [
+        'maker_id',
+        'model_id',
+        'year',
+        'car_type_id',
+        'city_id',
+        'vin',
+        'mileage',
+        'price',
+        'fuel_type_id',
+        'address',
+        'description',
+        'phone'
+    ];
 
     public function fuelType(): BelongsTo
     {
