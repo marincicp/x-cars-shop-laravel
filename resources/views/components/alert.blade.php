@@ -1,6 +1,7 @@
-@props(['type' => 'success'])
-<div class="alert alert-{{ $type }}">
-    <div>
-        {{ $slot }}
+@if (session()->has('message'))
+    <div class="alert alert-{{ session('type', 'success') }}">
+        <div>
+            {{ session('message') }}
+        </div>
     </div>
-</div>
+@endif

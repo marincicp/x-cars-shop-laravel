@@ -2,6 +2,7 @@
 
 
     <main>
+        <x-alert />
         <!-- Found Cars -->
         <section>
             <div class="container">

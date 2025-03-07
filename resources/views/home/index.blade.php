@@ -1,5 +1,6 @@
 <x-app-layout title="Home Page">
     <main>
+        <x-alert />
         <!-- Find a car form -->
         <x-search-form :$states :$makers :$fuelTypes :$carTypes />
         <!--/ Find a car form -->
