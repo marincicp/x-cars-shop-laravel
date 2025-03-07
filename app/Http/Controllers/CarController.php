@@ -49,7 +49,10 @@ class CarController extends Controller
 
         $car = $this->carRepo->createCar($validatedData);
 
-        return view("car.show", ["car" => $car]);
+        return to_route("car.show", $car)->with([
+            "message" => "Car successfully created.",
+            "type" => "success"
+        ]);
     }
 
     /**

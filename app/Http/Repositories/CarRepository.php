@@ -13,21 +13,25 @@ class CarRepository
 
    public  function createCar($data)
    {
-      $car = Auth::user()->cars()->create($data);
 
-      foreach ($data["images"] as $index => $img) {
-         $imgPath = $img->store("carImages");
-         $car->images()->create([
-            "image_path" => $imgPath,
-            "position" => $index + 1
-         ]);
-      }
+      return DB::transaction(function () use ($data) {
 
-      if (!empty($data["car_features"])) {
-         $car->features()->create($data["car_features"]);
-      }
+         $car = Auth::user()->cars()->create($data);
 
-      return $car;
+         foreach ($data["images"] as $index => $img) {
+            $imgPath = $img->store("carImages");
+            $car->images()->create([
+               "image_path" => $imgPath,
+               "position" => $index + 1
+            ]);
+         }
+
+         if (!empty($data["car_features"])) {
+            $car->features()->create($data["car_features"]);
+         }
+
+         return $car;
+      });
    }
 
 
