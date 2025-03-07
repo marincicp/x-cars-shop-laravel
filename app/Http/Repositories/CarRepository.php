@@ -7,6 +7,7 @@ use App\Filters\QueryFilter;
 use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CarRepository
 {
@@ -65,5 +66,15 @@ class CarRepository
       $query = Car::select("cars.*")->with("model", "maker", "carType", "primaryImage", "city", "fuelType")->where("published_at", "<", now());
 
       return QueryFilter::apply($query, $request)->paginate(15);
+   }
+
+
+   public function deleteCar(Car $car)
+   {
+
+      return DB::transaction(function () use ($car) {
+         $car->features()->delete();
+         $res =  $car->deleteOrFail();
+      });
    }
 }

@@ -7,6 +7,7 @@ use App\Http\Repositories\CarRepository;
 use App\Http\Requests\StoreCarRequest;
 use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Routing\CreatesRegularExpressionRouteConstraints;
 
 class CarController extends Controller
 {
@@ -37,6 +38,7 @@ class CarController extends Controller
      */
     public function create(Request $request)
     {
+
         return view("car.create", array_merge($this->dropdownCachedData, ["carFeatures" => CarFeatures::FEATURES]));
     }
 
@@ -68,7 +70,7 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        return view("car.edit");
+        return view("car.edit", ["car" => $car]);
     }
 
     /**
@@ -84,7 +86,11 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        //
+        $this->carRepo->deleteCar($car);
+
+        session()->flash("message", "Car successfully deleted.");
+        // return to_route("car.index")->with(["message" => "Car successfully deleted.", "type" => "success"]);
+        return to_route("car.index");
     }
 
     public function search(Request $request)
