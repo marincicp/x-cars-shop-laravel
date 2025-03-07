@@ -6,45 +6,54 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
+use App\Models\Car;
 use Illuminate\Support\Facades\Route;
 
 
+// Guest middleware
+Route::middleware("guest")->group(function () {
+   Route::get('/signup', [SignupController::class, "create"])->name("signup");
+   Route::post('/signup', [SignupController::class, "store"])->name("register");
+
+   Route::get('/login', [LoginController::class, "create"])->name("login");
+   Route::post('/login', [LoginController::class, "store"])->name("store");
+
+   // OAuth
+   Route::get('/auth/redirect', [LoginController::class, "googleRedirect"])->name("google");
+   Route::get('/auth/google/callback', [LoginController::class, "googleLogin"]);
+});
 
 
 
-////////////////////////////
-// LOGIN
-Route::get('/signup', [SignupController::class, "create"])->name("signup")->middleware("guest");
-Route::post('/signup', [SignupController::class, "store"])->name("register")->middleware("guest");
 
-Route::get('/login', [LoginController::class, "create"])->name("login")->middleware("guest");
-Route::post('/login', [LoginController::class, "store"])->name("store")->middleware("guest");
-Route::delete('/logout', [LoginController::class, "destroy"])->name("logout")->middleware("auth");
+// Auth middleware
+Route::middleware("auth")->group(function () {
 
+   Route::delete('/logout', [LoginController::class, "destroy"])->name("logout");
 
-// OAuth
-Route::get('/auth/redirect', [LoginController::class, "googleRedirect"])->name("google");
-Route::get('/auth/google/callback', [LoginController::class, "googleLogin"]);
-
-
+   // Cars
+   Route::controller(CarController::class)->group(function () {
+      Route::get("car", "index")->name("car.index");
+      Route::get("car/create", "create")->name("car.create");
+      Route::post("car", "store")->name("car.store");
+      Route::get("car/watchlist", "watchlist")->name("car.watchlist");
+      Route::delete("car/{car}", "destroy")->name("car.destroy")->can("delete", "car");
+      Route::post("car/{car}", "show")->name("car.show");
+      Route::put("car/{car}", "update")->name("car.update")->can("update", "car");
+      Route::get("car/{car}/edit", "edit")->name("car.edit");
+   });
+});
 
 
 
 Route::get('/', [HomeController::class, "index"])->name("home");
 
 
-
-
-////////////////////////////
-// CARS
+// Cars
 Route::get("/car/search", [CarController::class, "search"])->name("car.search");
-Route::get("/car/watchlist", [CarController::class, "watchlist"])->name("car.watchlist")->middleware("auth");
-
-Route::resource("car", CarController::class);
+Route::get("car/{car}", [CarController::class, "show"])->name("car.show");
 
 
-
-////////////////////////////
 /// API
 Route::get("/makers/{maker_id}/models", [ModelApiController::class, "getModelsByMaker"]);
 Route::get("/states/{state_id}/cities", [CityApiController::class, "getCitiesByState"]);
