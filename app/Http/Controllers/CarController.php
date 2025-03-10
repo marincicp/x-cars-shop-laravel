@@ -7,7 +7,7 @@ use App\Http\Repositories\CarRepository;
 use App\Http\Requests\StoreCarRequest;
 use App\Models\Car;
 use Illuminate\Http\Request;
-use Illuminate\Routing\CreatesRegularExpressionRouteConstraints;
+use Illuminate\Support\Facades\Auth;
 
 class CarController extends Controller
 {
@@ -18,7 +18,6 @@ class CarController extends Controller
     public function __construct(protected CarRepository $carRepo)
     {
         $this->carRepo = $carRepo;
-
         $this->dropdownCachedData = DropdownController::getDropdownData();
     }
 
@@ -38,7 +37,6 @@ class CarController extends Controller
      */
     public function create(Request $request)
     {
-
         return view("car.create", array_merge($this->dropdownCachedData, ["carFeatures" => CarFeatures::FEATURES]));
     }
 
@@ -62,7 +60,9 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        return view("car.show", ["car" => $car]);
+
+        $isInWatchList = $this->carRepo->isFavoriteCar($car);
+        return view("car.show", ["car" => $car, "isInWatchList" => $isInWatchList]);
     }
 
     /**
@@ -86,6 +86,7 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
+        // Gate::authorize('delete', $car);
         $this->carRepo->deleteCar($car);
 
         session()->flash("message", "Car successfully deleted.");
@@ -98,9 +99,10 @@ class CarController extends Controller
 
         $cars = $this->carRepo->getCarsByQueryParams($request);
 
+        $favoriteCars = Auth::user()->favoriteCars()->pluck("car_id")->toArray();
         return view(
             "car.search",
-            array_merge(["cars" => $cars], $this->dropdownCachedData)
+            array_merge(["cars" => $cars, "favCars" => $favoriteCars], $this->dropdownCachedData)
         );
     }
 
@@ -113,5 +115,31 @@ class CarController extends Controller
         $cars = $this->carRepo->getCurrentUserFavoriteCars();
 
         return view("car.watchlist", ["cars" => $cars]);
+    }
+
+
+    public function addToWatchlist(Car $car)
+    {
+
+        $res =  $this->carRepo->addToWatchilst($car);
+        if ($res) {
+            // return to_route("home")->with("message", "Car successfully added to watchlist");
+            return back()->with("message", "Car successfully added to watchlist");
+        } else {
+            return back();
+        }
+    }
+
+
+    public function removeFromWatchlist(Car $car)
+    {
+        $res = $this->carRepo->removeFromWatchlist($car);
+
+        if ($res) {
+            // return to_route("home")->with("message", "Car successfully removed from watchlist");
+            return back()->with("message", "Car successfully removed from watchlist");
+        } else {
+            return back();
+        }
     }
 }

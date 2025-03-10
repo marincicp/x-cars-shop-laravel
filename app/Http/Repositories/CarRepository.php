@@ -14,7 +14,6 @@ class CarRepository
 
    public  function createCar($data)
    {
-
       return DB::transaction(function () use ($data) {
 
          $car = Auth::user()->cars()->create($data);
@@ -76,5 +75,34 @@ class CarRepository
          $car->features()->delete();
          $res =  $car->deleteOrFail();
       });
+   }
+
+
+
+   public function isFavoriteCar(Car $car)
+   {
+      return $car->favoritedCars()->where("user_id", Auth::user()->id)->exists();
+   }
+
+   public function addToWatchilst(Car $car)
+   {
+      if ($this->isFavoriteCar($car)) {
+         return false;
+      }
+
+      $car->favoritedCars()->attach(["user_id" => Auth::user()->id]);
+
+      return true;
+   }
+
+   public function removeFromWatchlist(Car $car)
+   {
+
+      if (! $this->isFavoriteCar($car)) {
+         return false;
+      }
+      $car->favoritedCars()->detach(Auth::user()->id);
+
+      return true;
    }
 }

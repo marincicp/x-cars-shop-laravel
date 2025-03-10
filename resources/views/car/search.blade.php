@@ -19,12 +19,6 @@
                         <h2>Define your search criteria</h2>
                     </div>
 
-                    {{-- <select class="sort-dropdown">
-                        <option value="">Order By</option>
-                        <option value="price">Price Asc</option>
-                        <option value="-price">Price Desc</option>
-                    </select> --}}
-
                     <x-selects.sort-dropdown name="sort" class="sort-dropdown" />
                 </div>
                 <div class="search-car-results-wrapper">
@@ -102,7 +96,11 @@
                     <div class="search-cars-results">
                         <div class="car-items-listing">
                             @forelse ($cars as $car)
-                                <x-car-item :$car />
+                                <?php
+                                $isInWatchList = in_array($car->id, $favCars);
+                                ?>
+
+                                <x-car-item :$car :$isInWatchList />
                             @empty
 
                                 <p class=" card text-center  grid-span-1-3 p-medium">No cars found for that filter.</p>

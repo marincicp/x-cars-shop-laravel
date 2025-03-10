@@ -6,7 +6,6 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
-use App\Models\Car;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,8 +23,6 @@ Route::middleware("guest")->group(function () {
 });
 
 
-
-
 // Auth middleware
 Route::middleware("auth")->group(function () {
 
@@ -39,6 +36,8 @@ Route::middleware("auth")->group(function () {
       Route::get("car/watchlist", "watchlist")->name("car.watchlist");
       Route::delete("car/{car}", "destroy")->name("car.destroy")->can("delete", "car");
       Route::post("car/{car}", "show")->name("car.show");
+      Route::post("car/{car}", "addToWatchlist")->name("car.addToWatchlist");
+      Route::delete("car/{car}", "removeFromWatchlist")->name("car.removeFromWatchlist");
       Route::put("car/{car}", "update")->name("car.update")->can("update", "car");
       Route::get("car/{car}/edit", "edit")->name("car.edit");
    });
