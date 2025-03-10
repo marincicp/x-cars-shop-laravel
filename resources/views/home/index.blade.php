@@ -12,7 +12,11 @@
                 <div class="car-items-listing">
 
                     @foreach ($cars as $car)
-                        <x-car-item :$car />
+                        <?php
+                        $isInWatchList = in_array($car->id, $favCars);
+                        ?>
+
+                        <x-car-item :$car :$isInWatchList />
                     @endforeach
 
 
