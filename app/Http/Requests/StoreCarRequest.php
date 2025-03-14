@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rules\File;
@@ -14,7 +15,7 @@ class StoreCarRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Auth::check();
     }
 
     /**
@@ -31,7 +32,8 @@ class StoreCarRequest extends FormRequest
             "year" => ["required", "integer", "min:1990", "max:" . date("Y")],
             "car_type_id" => ["required", "integer", "min:1", "exists:car_types,id"],
             "city_id" => ["required", "integer", "min:1", "exists:cities,id"],
-            "vin" => ["required", "size:2"],
+            // "vin" => ["required", "size:2"],
+            "vin" => ["nullable"],
             "mileage" => ["required", "integer", "min:0"],
             "price" => ["required", "integer", "min:0"],
             "fuel_type_id" => ["required", "integer", "min:1", "exists:fuel_types,id"],
