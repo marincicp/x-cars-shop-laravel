@@ -37,7 +37,7 @@ Route::middleware("auth")->group(function () {
       Route::delete("car/{car}", "destroy")->name("car.destroy")->can("delete", "car");
       Route::post("car/{car}", "show")->name("car.show");
       Route::post("car/{car}", "addToWatchlist")->name("car.addToWatchlist");
-      Route::delete("car/{car}", "removeFromWatchlist")->name("car.removeFromWatchlist");
+      Route::delete("car/watchlist/{car}", "removeFromWatchlist")->name("car.removeFromWatchlist");
       Route::put("car/{car}", "update")->name("car.update")->can("update", "car");
       Route::get("car/{car}/edit", "edit")->name("car.edit");
    });
