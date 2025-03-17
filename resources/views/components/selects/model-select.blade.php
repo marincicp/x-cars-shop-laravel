@@ -1,17 +1,13 @@
-@props(['label' => '', 'models' => [], 'defaultValue' => null])
+@props(['label' => '', 'models' => [], 'defaultValue' => null, 'currentMakerModels' => []])
 <x-form.select :$label id="modelSelect" name="model_id">
     <option value="" style="display: block">Model</option>
 
-    <?php
-    // dd($defaultValue);
-    ?>
-    {{-- @if ($models)
-        @foreach ($models as $model)
-            <option value="{{ $model['id'] }}" <?php
-            $defaultValue == $model['id'] ? 'selected' : '';
-            ?> style="display: block">{{ $model['name'] }}
-            </option>
+    @if ($currentMakerModels)
+        @foreach ($currentMakerModels as $model)
+            <option @if ($defaultValue == $model['id']) selected @endif value="{{ $model['id'] }}">
+                {{ $model['name'] }}</option>
         @endforeach
-    @endif --}}
+
+    @endif
 
 </x-form.select>

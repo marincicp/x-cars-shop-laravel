@@ -5,7 +5,9 @@
     <main>
         <div class="container-small">
             <h1 class="car-details-page-title">Add new car</h1>
-            <form action="" method="POST" enctype="multipart/form-data" class="card add-new-car-form">
+            <form action="{{ route('car.update', $car) }}" method="POST" class="card add-new-car-form">
+                @method('PUT')
+                @csrf
                 <div class="form-content">
                     <div class="form-details">
                         <div class="row">
@@ -21,8 +23,8 @@
                             <div class="col">
                                 <div class="form-group">
 
-                                    <x-selects.model-select label="Model" :$models
-                                        defaultValue="{{ $car->model_id }}" />
+                                    <x-selects.model-select label="Model" :$models defaultValue="{{ $car->model_id }}"
+                                        :$currentMakerModels />
 
                                 </div>
                             </div>
@@ -87,10 +89,12 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <label>City</label>
-                                    <select>
-                                        <option value="">City</option>
-                                    </select>
+                                    <x-selects.city-select :$currentStateCities label="City"
+                                        defaultValue="{{ $car->city_id }}" />
+
+
+
+
                                 </div>
                             </div>
                         </div>
