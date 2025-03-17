@@ -1,12 +1,14 @@
-@props(['marginB' => false, 'name' => '', 'label' => ''])
+@props(['marginB' => false, 'name' => '', 'label' => '', 'defaultValue' => null])
 
 <?php
+
 $defaults = [
     'id' => $name,
     'name' => $name,
     'type' => 'text',
-    'value' => old($name),
+    'value' => $defaultValue ?? old($name),
 ];
+
 ?>
 
 <x-form.field :$marginB :$name>
