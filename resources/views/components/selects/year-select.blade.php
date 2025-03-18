@@ -1,9 +1,7 @@
 @props(['defaultValue' => null])
 
 <?php
-
 $curYear = (int) date('Y');
-
 ?>
 
 
@@ -16,5 +14,5 @@ $curYear = (int) date('Y');
             {{ $startYear }}
         </option>
     @endfor
-
 </x-form.select>
+<x-form.error :error="$errors->first("year")" />
