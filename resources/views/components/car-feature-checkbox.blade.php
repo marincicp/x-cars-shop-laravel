@@ -1,7 +1,7 @@
-@props(['name', 'label'])
-
+@props(['name', 'label', 'checked' => false])
 
 <label class="checkbox">
-    <input type="checkbox" name="{{ $name }}" value={{ old($name, 1) }} {{ old($name) ? 'checked' : '' }} />
+    <input type="checkbox" name="{{ $name }}" value="{{ $checked || old($name, 1) }}"
+        {{ $checked || old($name) ? 'checked' : '' }} />
     {{ $label }}
 </label>

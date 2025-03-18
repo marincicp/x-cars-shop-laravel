@@ -33,12 +33,12 @@ Route::middleware("auth")->group(function () {
       Route::get("car", "index")->name("car.index");
       Route::get("car/create", "create")->name("car.create");
       Route::post("car", "store")->name("car.store");
-      Route::get("car/watchlist", "watchlist")->name("car.watchlist");
       Route::delete("car/{car}", "destroy")->name("car.destroy")->can("delete", "car");
       Route::post("car/{car}", "show")->name("car.show");
+      Route::put("cars/{car}", "update")->name("car.update")->can("update", "car");
       Route::post("car/{car}", "addToWatchlist")->name("car.addToWatchlist");
+      Route::get("car/watchlist", "watchlist")->name("car.watchlist");
       Route::delete("car/watchlist/{car}", "removeFromWatchlist")->name("car.removeFromWatchlist");
-      Route::put("car/{car}", "update")->name("car.update")->can("update", "car");
       Route::get("car/{car}/edit", "edit")->name("car.edit");
    });
 });

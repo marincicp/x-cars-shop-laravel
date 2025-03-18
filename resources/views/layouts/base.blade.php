@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} | {{ config('app.name') }}</title>
 
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -35,6 +36,7 @@
         integrity="sha512-XJgPMFq31Ren4pKVQgeD+0JTDzn0IwS1802sc+QTZckE6rny7AN2HLReq6Yamwpd2hFe5nJJGZLvPStWFv5Kww=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="module" src="/js/app.js"></script>
+    @stack('scripts')
 </body>
 
 </html>

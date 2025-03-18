@@ -35,6 +35,25 @@ class CarRepository
    }
 
 
+
+
+   public function updateCar(Car $car, $data)
+   {
+      return DB::transaction(function () use ($car, $data) {
+
+         $car->update($data);
+
+         $car->features()->delete();
+         if (!empty($data["car_features"])) {
+            $car->features()->create($data["car_features"]);
+         }
+
+         return $car;
+      });
+   }
+
+
+
    /**
     * Get a list of cars that the current user has added
     */
@@ -81,7 +100,11 @@ class CarRepository
 
    public function isFavoriteCar(Car $car)
    {
-      return $car->favoritedCars()->where("user_id", Auth::user()->id)->exists();
+      if (Auth::check()) {
+         return $car->favoritedCars()->where("user_id", Auth::user()->id)->exists();
+      }
+
+      return false;
    }
 
    public function addToWatchilst(Car $car)

@@ -16,3 +16,4 @@
 
     {{ $slot }}
 </select>
+<x-form.error :error="$errors->first("year")" />
