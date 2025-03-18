@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\CarFeatures;
 use App\Http\Repositories\CarRepository;
 use App\Http\Requests\StoreCarRequest;
+use App\Http\Requests\UpdateCarRequest;
 use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,15 +71,24 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        return view("car.edit", ["car" => $car]);
+
+        $models = $car->maker->models;
+        $currentStateCities = $car->city->state->cities;
+        $currentMakerModels = $car->model->maker->models;
+        $carFeatures = CarFeatures::FEATURES;
+
+        return view("car.edit", array_merge(compact("car", "models", "currentStateCities", "currentMakerModels", "carFeatures"), $this->dropdownCachedData));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCarRequest $request,  Car $car)
     {
-        //
+        $validatedData = $request->validated();
+        $this->carRepo->updateCar($car, $validatedData);
+
+        return to_route("car.index")->with(["message" => "Car successfully updated.", "type" => "success"]);
     }
 
     /**
@@ -86,7 +96,6 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        // Gate::authorize('delete', $car);
         $this->carRepo->deleteCar($car);
 
         session()->flash("message", "Car successfully deleted.");
@@ -97,9 +106,15 @@ class CarController extends Controller
     public function search(Request $request)
     {
 
+        $favoriteCars = [];
+
         $cars = $this->carRepo->getCarsByQueryParams($request);
 
-        $favoriteCars = Auth::user()->favoriteCars()->pluck("car_id")->toArray();
+
+        if (Auth::check()) {
+            $favoriteCars = Auth::user()->favoriteCars()->pluck("car_id")->toArray();
+        }
+
         return view(
             "car.search",
             array_merge(["cars" => $cars, "favCars" => $favoriteCars], $this->dropdownCachedData)
