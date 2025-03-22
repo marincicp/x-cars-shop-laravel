@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId("car_id")->constrained("cars")->cascadeOnDelete();
             $table->string("image_path", 255);
             $table->integer("position");
+            $table->timestamp("deleted_at")->nullable();
         });
     }
 

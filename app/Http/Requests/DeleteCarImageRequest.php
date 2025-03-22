@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 use App\Models\Car;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
 
 use function Pest\Laravel\get;
 
@@ -35,8 +37,28 @@ class DeleteCarImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "car_id" => ["required", "min:1"],
-            "image_id" => ["required", "min:1"]
+            "car_id" => ["required", "min:1", "string"],
+            "image_id" => ["required", "min:1", "string"]
+        ];
+    }
+
+
+    public function after()
+    {
+        return [
+            function (Validator $validator) {
+                if ($validator->errors()->any()) {
+                    return;
+                }
+
+                $car = Car::find($this->request->get("car_id"));
+
+                if ($car->images()->count() === 1) {
+                    throw ValidationException::withMessages([
+                        'car_id' => 'Car must have minimum one image.',
+                    ]);
+                }
+            }
         ];
     }
 }
