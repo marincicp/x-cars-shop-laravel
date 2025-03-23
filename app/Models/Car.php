@@ -83,7 +83,7 @@ class Car extends EloquentModel
 
     public function images(): HasMany
     {
-        return $this->hasMany(CarImage::class);
+        return $this->hasMany(CarImage::class)->orderBy("position");
     }
 
 

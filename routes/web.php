@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\CarImageApiController;
 use App\Http\Controllers\Api\CityApiController;
 use App\Http\Controllers\Api\ModelApiController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\CarImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
@@ -30,6 +32,7 @@ Route::middleware("auth")->group(function () {
 
    // Cars
    Route::controller(CarController::class)->group(function () {
+
       Route::get("car", "index")->name("car.index");
       Route::get("car/create", "create")->name("car.create");
       Route::post("car", "store")->name("car.store");
@@ -41,7 +44,16 @@ Route::middleware("auth")->group(function () {
       Route::delete("car/watchlist/{car}", "removeFromWatchlist")->name("car.removeFromWatchlist");
       Route::get("car/{car}/edit", "edit")->name("car.edit");
    });
+
+
+   // Car image
+   Route::controller(CarImageController::class)->group(function () {
+      Route::get("car/{car}/edit/images", "editImages")->name("car.images");
+      Route::put("car/{car}/edit/images", "updateImages")->name("car.update-images");
+   });
 });
+
+
 
 
 
@@ -56,3 +68,5 @@ Route::get("car/{car}", [CarController::class, "show"])->name("car.show");
 /// API
 Route::get("/makers/{maker_id}/models", [ModelApiController::class, "getModelsByMaker"]);
 Route::get("/states/{state_id}/cities", [CityApiController::class, "getCitiesByState"]);
+
+Route::delete("/car/{car}/images/{image_id}", action: [CarImageApiController::class, "destroy"])->name("carImage.delete");
