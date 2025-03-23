@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 
-use function Pest\Laravel\get;
 
 class DeleteCarImageRequest extends FormRequest
 {
