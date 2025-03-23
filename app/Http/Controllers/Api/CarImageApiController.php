@@ -6,6 +6,7 @@ use App\Http\Repositories\CarImageRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteCarImageRequest;
 use App\Models\Car;
+use Illuminate\Http\JsonResponse;
 
 class CarImageApiController extends Controller
 {
@@ -16,15 +17,14 @@ class CarImageApiController extends Controller
     /**
      * Delete car image
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(DeleteCarImageRequest $request, Car $car)
+    public function destroy(DeleteCarImageRequest $request, Car $car): JsonResponse
     {
         $validateData = $request->validated();
         $imageId = $validateData["image_id"];
 
         $res = $this->carImageRepo->deleteCarImage($car, $imageId);
-
 
         if (!$res) {
             return response()->json([
