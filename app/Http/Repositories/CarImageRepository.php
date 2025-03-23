@@ -32,22 +32,12 @@ class CarImageRepository
     */
    public function updateCarImageOrder(Car $car, array $data)
    {
-      try {
-         $isUpdated = DB::transaction(function () use ($car, $data) {
+      return
+         DB::transaction(function () use ($car, $data) {
             foreach ($data["images"] as $imageId => $imgPosition) {
-               $updated = $car->images()->where("id", $imageId)->update(["position" => $imgPosition]);
 
-               if ($updated === 0) {
-                  throw new Exception("Failed to update image ID: $imageId");
-               }
+               $car->images()->where("id", $imageId)->update(["position" => $imgPosition]);
             }
-
-            return true;
          });
-      } catch (Exception $err) {
-         $isUpdated = false;
-      }
-
-      return $isUpdated;
    }
 }

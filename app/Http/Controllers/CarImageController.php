@@ -34,20 +34,12 @@ class CarImageController extends Controller
 
         $validatedData = $request->validated();
 
-
-        $res =   $this->carImageRepo->updateCarImageOrder($car, $validatedData);
-
-        if ($res) {
-            return to_route("car.index")->with([
-                "message" => "Car images successfully updated.",
-                "type" => "success"
-            ]);
-        };
+        $this->carImageRepo->updateCarImageOrder($car, $validatedData);
 
 
         return to_route("car.index")->with([
-            "message" => "Failed to update car images.",
-            "type" => "error"
+            "message" => "Car images successfully updated.",
+            "type" => "success"
         ]);
     }
 }
