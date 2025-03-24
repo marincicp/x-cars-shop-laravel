@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Model;
 use App\Policies\CarPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView("pagination");
 
         Gate::define("car-update", [CarPolicy::class, "update"]);
+        Gate::define("user-update", [UserPolicy::class, "update"]);
     }
 }

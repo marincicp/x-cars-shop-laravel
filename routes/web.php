@@ -7,6 +7,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SignupController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,11 @@ Route::middleware("guest")->group(function () {
 
 // Auth middleware
 Route::middleware("auth")->group(function () {
+
+   // User
+   Route::get("user/{user}/edit", [ProfileController::class, "edit"])->name("user.edit")->can("update", "user");
+   Route::put("user/{user}", [ProfileController::class, "update"])->name("user.update");
+
 
    Route::delete('/logout', [LoginController::class, "destroy"])->name("logout");
 
