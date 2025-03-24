@@ -38,8 +38,7 @@ class CarImageController extends Controller
 
 
         return to_route("car.index")->with([
-            "message" => "Car images successfully updated.",
-            "type" => "success"
+            "message.success" => "Car images successfully updated."
         ]);
     }
 }
