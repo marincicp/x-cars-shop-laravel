@@ -22,8 +22,8 @@
                                 @forelse ($cars as $car)
                                     <tr>
                                         <td>
-                                            <img src="{{ $car->primaryImage->image_path }}" alt=""
-                                                class="my-cars-img-thumbnail" />
+                                            <img src="{{ asset('storage/' . $car->primaryImage->image_path) }}"
+                                                alt="" class="my-cars-img-thumbnail" />
                                         </td>
                                         <td>{{ $car->year }} - {{ $car->maker->name }} {{ $car->model->name }}
                                         </td>
@@ -42,7 +42,8 @@
 
                                                 edit
                                             </a>
-                                            <a href="car_images.html" class="btn btn-edit inline-flex items-center">
+                                            <a href="{{ route('car.images', $car) }}"
+                                                class="btn btn-edit inline-flex items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                     style="width: 12px; margin-right: 5px">

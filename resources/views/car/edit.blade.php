@@ -1,11 +1,8 @@
 <x-app-layout>
-
-    <?php
-    ?>
     <main>
         <div class="container-small">
             <h1 class="car-details-page-title">Add new car</h1>
-            <form action="{{ route('car.update', $car) }}" method="POST" class="card add-new-car-form">
+            <form action="{{ route('car.update', $car) }}" method="POST" class="card add-new-car-form edit-form">
                 @method('PUT')
                 @csrf
                 <div class="form-content">
@@ -16,8 +13,6 @@
                                     <x-selects.maker-select defaultValue="{{ $car->maker_id }}" label="Makers"
                                         :$makers />
                                 </div>
-
-
 
                             </div>
                             <div class="col">
@@ -91,10 +86,6 @@
                                 <div class="form-group">
                                     <x-selects.city-select :$currentStateCities label="City"
                                         defaultValue="{{ $car->city_id }}" />
-
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -119,7 +110,7 @@
 
                         <div class="form-group">
                             <label>Detailed Description</label>
-                            <textarea rows="10">{!! $car->description !!}</textarea>
+                            <textarea name="description" rows="10">{!! $car->description !!}</textarea>
                         </div>
                         <div class="form-group">
                             <label class="checkbox">
@@ -145,11 +136,15 @@
                 <div class="p-medium" style="width: 100%">
                     <div class="flex justify-end gap-1">
                         <button type="button" class="btn btn-default">Reset</button>
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary btn-submit" disabled>Submit</button>
                     </div>
                 </div>
             </form>
         </div>
     </main>
 
+
+    @push('scripts')
+        <script src="{{ asset('js/car/edit-form.js') }}"></script>
+    @endpush
 </x-app-layout>
