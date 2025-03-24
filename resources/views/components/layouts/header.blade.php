@@ -33,6 +33,9 @@
                             <p>{{ Auth::user()->name }}</p>
                         </li>
                         <li>
+                            <a href="{{ route('user.edit', Auth::user()) }}">Edit profile</a>
+                        </li>
+                        <li>
                             <a href="{{ route('car.index') }}">My Cars</a>
                         </li>
                         <li>

@@ -1,4 +1,5 @@
-@props(['marginB' => false, 'name' => '', 'label' => '', 'defaultValue' => null])
+@props(['marginB' => false, 'name' => '', 'label' => '', 'defaultValue' => null, 'disabled' => false])
+
 
 <?php
 
@@ -16,5 +17,5 @@ $defaults = [
         <label>{{ $label }}</label>
     @endif
 
-    <input {{ $attributes($defaults) }} />
+    <input {{ $attributes($defaults) }} @disabled($disabled) />
 </x-form.field>
