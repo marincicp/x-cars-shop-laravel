@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Car;
 
 use App\Constants\CarFeatures;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\DropdownController;
 use App\Http\Repositories\CarRepository;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;

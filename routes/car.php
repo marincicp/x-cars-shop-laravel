@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\CarImageApiController;
-use App\Http\Controllers\CarController;
-use App\Http\Controllers\CarImageController;
+use App\Http\Controllers\Car\CarController;
+use App\Http\Controllers\Car\CarImageController;
 use Illuminate\Support\Facades\Route;
 
 

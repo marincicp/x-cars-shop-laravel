@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Car;
 
+use App\Http\Controllers\Controller;
 use App\Http\Repositories\CarImageRepository;
 use App\Http\Requests\UpdateCarImagesRequest;
 use App\Models\Car;
