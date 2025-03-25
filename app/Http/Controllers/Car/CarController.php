@@ -121,41 +121,4 @@ class CarController extends Controller
             array_merge(["cars" => $cars, "favCars" => $favoriteCars], $this->dropdownCachedData)
         );
     }
-
-
-    /**
-     * Display a list  of the user favorite cars.
-     */
-    public function watchlist()
-    {
-        $cars = $this->carRepo->getCurrentUserFavoriteCars();
-
-        return view("car.watchlist", ["cars" => $cars]);
-    }
-
-
-    public function addToWatchlist(Car $car)
-    {
-
-        $res =  $this->carRepo->addToWatchilst($car);
-        if ($res) {
-            // return to_route("home")->with("message", "Car successfully added to watchlist");
-            return back()->with("message.success", "Car successfully added to watchlist");
-        } else {
-            return back();
-        }
-    }
-
-
-    public function removeFromWatchlist(Car $car)
-    {
-        $res = $this->carRepo->removeFromWatchlist($car);
-
-        if ($res) {
-            // return to_route("home")->with("message", "Car successfully removed from watchlist");
-            return back()->with("message.success", "Car successfully removed from watchlist");
-        } else {
-            return back();
-        }
-    }
 }

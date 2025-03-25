@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CarImageApiController;
 use App\Http\Controllers\Car\CarController;
 use App\Http\Controllers\Car\CarImageController;
+use App\Http\Controllers\Car\WatchlistCarController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,11 +17,20 @@ Route::middleware("auth")->group(function () {
       Route::delete("car/{car}", "destroy")->name("car.destroy")->can("delete", "car");
       Route::post("car/{car}", "show")->name("car.show");
       Route::put("cars/{car}", "update")->name("car.update")->can("update", "car");
-      Route::post("car/{car}", "addToWatchlist")->name("car.addToWatchlist");
-      Route::get("car/watchlist", "watchlist")->name("car.watchlist");
-      Route::delete("car/watchlist/{car}", "removeFromWatchlist")->name("car.removeFromWatchlist");
+
       Route::get("car/{car}/edit", "edit")->name("car.edit");
    });
+
+
+
+   Route::controller(WatchlistCarController::class)->group(function () {
+      Route::get("car/watchlist", "index")->name("car.watchlist");
+      Route::post("car/{car}", "store")->name("car.addToWatchlist");
+      Route::delete("car/watchlist/{car}", "destroy")->name("car.removeFromWatchlist");
+   });
+
+
+
 
 
    Route::controller(CarImageController::class)->group(function () {
