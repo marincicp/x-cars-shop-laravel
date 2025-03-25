@@ -300,9 +300,16 @@ hr {
 .ml-medium {
     margin-left: 1rem;
 }
+.mt-medium {
+    margin-top: 1rem;
+}
 
 .mt-large {
     margin-top: 1.5rem;
+}
+
+.mt-xl {
+    margin-top: 3rem;
 }
 
 a {
