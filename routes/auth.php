@@ -3,7 +3,6 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\SignupController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,8 +33,8 @@ Route::middleware("guest")->group(function () {
 
 Route::middleware("auth")->group(function () {
 
-   Route::get("user/{user}/edit", [ProfileController::class, "edit"])->name("user.edit")->can("update", "user");
-   Route::put("user/{user}", [ProfileController::class, "update"])->name("user.update");
+   // Route::get("user/{user}/edit", [ProfileController::class, "edit"])->name("user.edit")->can("update", "user");
+   // Route::put("user/{user}", [ProfileController::class, "update"])->name("user.update");
 
    Route::delete('/logout', [LoginController::class, "destroy"])->name("logout");
 });
