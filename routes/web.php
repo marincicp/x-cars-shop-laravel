@@ -15,4 +15,5 @@ Route::get("/states/{state_id}/cities", [CityApiController::class, "getCitiesByS
 
 
 require __DIR__ . "/auth.php";
+require __DIR__ . "/settings.php";
 require __DIR__ . "/car.php";
