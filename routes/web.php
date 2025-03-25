@@ -7,6 +7,8 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NewPasswordController;
+use App\Http\Controllers\PasswordResetLinkController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SignupController;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +23,8 @@ Route::middleware("guest")->group(function () {
    Route::post('/login', [LoginController::class, "store"])->name("store");
 
    // OAuth
-   Route::get('/auth/redirect', [LoginController::class, "googleRedirect"])->name("google");
-   Route::get('/auth/google/callback', [LoginController::class, "googleLogin"]);
+   Route::get('/auth/redirect', [LoginController::class, "redirectToGoogle"])->name("google");
+   Route::get('/auth/google/callback', [LoginController::class, "handleGoogleCallback"]);
 });
 
 
@@ -76,3 +78,15 @@ Route::get("/makers/{maker_id}/models", [ModelApiController::class, "getModelsBy
 Route::get("/states/{state_id}/cities", [CityApiController::class, "getCitiesByState"]);
 
 Route::delete("/car/{car}/images/{image_id}", action: [CarImageApiController::class, "destroy"])->name("carImage.delete");
+
+
+
+
+
+
+Route::get("/forgot-password", [PasswordResetLinkController::class, "create"])->middleware("guest")->name("password.request");
+Route::post("/forgot-password", [PasswordResetLinkController::class, "store"])->middleware("guest")->name("password.email");
+
+
+Route::get("/reset-password/{token}", [NewPasswordController::class, "create"])->name("password.reset");
+Route::post("/reset-password", [NewPasswordController::class, "store"])->name("password.store");
