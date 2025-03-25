@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRegisterForm;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +25,7 @@ class SignupController extends Controller
 
         $userData = $request->validated();
         $userData["name"] = $userData["firstName"] . " " . $userData["lastName"];
-
+        // dd($userData);
         $user = User::create($userData);
 
         Auth::login($user);
