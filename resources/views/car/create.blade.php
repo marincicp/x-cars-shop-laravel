@@ -1,12 +1,7 @@
 @props(['makers', 'carTypes', 'fuelTypes', 'states', 'carFeatures'])
 
-<?php
-if ($errors->any()) {
-    dump($errors);
-}
-?>
-
 <x-app-layout>
+    <x-alert />
     <main>
         <div class="container-small">
             <h1 class="car-details-page-title">Add new car</h1>
@@ -21,7 +16,6 @@ if ($errors->any()) {
 
                                     <x-selects.maker-select :$makers label="Makers" />
 
-                                    <label>Maker</label>
                                     <p class="error-message">This field is required</p>
                                 </div>
                             </div>

@@ -6,8 +6,8 @@
             <div class="flex" style="gap: 5rem">
                 <div class="auth-page-form">
                     <div class="text-center">
-                        <a href="/">
-                            <img src="/img/logoipsum-265.svg" alt="" />
+                        <a href="{{ route('home') }}">
+                            <img src="{{ asset('/img/cars-logo.png') }}" alt="logo" />
                         </a>
                     </div>
                     <h1 class="auth-page-title">{{ $title }}</h1>

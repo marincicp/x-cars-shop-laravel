@@ -14,9 +14,8 @@
 
         <x-form.button>Register</x-form.button>
 
-        <div class="grid grid-cols-2 gap-1 social-auth-buttons">
+        <div class="grid gap-1 social-auth-buttons">
             <x-google-button />
-            <x-fb-button />
         </div>
         <div class="login-text-dont-have-account">
             Already have an account? -
