@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\CarImageApiController;
 use App\Http\Controllers\Car\CarController;
 use App\Http\Controllers\Car\CarImageController;
+use App\Http\Controllers\Car\CarSearchController;
 use App\Http\Controllers\Car\WatchlistCarController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,11 +16,14 @@ Route::middleware("auth")->group(function () {
       Route::get("car/create", "create")->name("car.create");
       Route::post("car", "store")->name("car.store");
       Route::delete("car/{car}", "destroy")->name("car.destroy")->can("delete", "car");
-      Route::post("car/{car}", "show")->name("car.show");
+      // Route::post("car/{car}", "show")->name("car.show");
       Route::put("cars/{car}", "update")->name("car.update")->can("update", "car");
 
       Route::get("car/{car}/edit", "edit")->name("car.edit");
    });
+
+
+
 
 
 
@@ -41,8 +45,12 @@ Route::middleware("auth")->group(function () {
 
 
 
-Route::get("/car/search", [CarController::class, "search"])->name("car.search");
+
+Route::get("/car/search", CarSearchController::class)->name("car.search");
+
 Route::get("car/{car}", [CarController::class, "show"])->name("car.show");
+
+
 
 
 

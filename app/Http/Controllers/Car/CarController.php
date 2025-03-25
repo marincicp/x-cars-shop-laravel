@@ -103,22 +103,4 @@ class CarController extends Controller
         // return to_route("car.index")->with(["message" => "Car successfully deleted.", "type" => "success"]);
         return to_route("car.index");
     }
-
-    public function search(Request $request)
-    {
-
-        $favoriteCars = [];
-
-        $cars = $this->carRepo->getCarsByQueryParams($request);
-
-
-        if (Auth::check()) {
-            $favoriteCars = Auth::user()->favoriteCars()->pluck("car_id")->toArray();
-        }
-
-        return view(
-            "car.search",
-            array_merge(["cars" => $cars, "favCars" => $favoriteCars], $this->dropdownCachedData)
-        );
-    }
 }
