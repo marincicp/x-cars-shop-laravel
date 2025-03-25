@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserLoginRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -14,6 +15,10 @@ class LoginController extends Controller
 {
 
 
+    /**
+     * Show the login page
+     * @return \Illuminate\Contracts\View\View
+     */
     public function create(): View
     {
         return view("auth.login");
@@ -21,9 +26,13 @@ class LoginController extends Controller
 
 
 
-    public function store(StoreUserLoginRequest $request)
+    /**
+     * * Handle an incoming authentication request
+     * @param \App\Http\Requests\StoreUserLoginRequest $request
+     * @return RedirectResponse
+     */
+    public function store(StoreUserLoginRequest $request): RedirectResponse
     {
-
         $validatedData = $request->validated();
 
         if (! Auth::attempt($validatedData)) {
@@ -37,20 +46,34 @@ class LoginController extends Controller
         return redirect("/");
     }
 
-    public function destroy()
+
+    /**
+     * Destroy an authenticated session
+     * @return RedirectResponse
+     */
+    public function destroy(): RedirectResponse
     {
         Auth::logout();
         return redirect("/");
     }
 
 
-
-    public function googleRedirect()
+    /**
+     * Redirect the user to the Google authentication page
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function redirectToGoogle(): RedirectResponse
     {
         return Socialite::driver('google')->redirect();
     }
 
-    public function googleLogin(Request $request)
+
+    /**
+     * Handle the callback from Google after authentication
+     * @param \Illuminate\Http\Request $request
+     * @return RedirectResponse
+     */
+    public function handleGoogleCallback(Request $request): RedirectResponse
     {
         $googleUser = Socialite::driver('google')->user();
         $user = User::where("email", $googleUser->email)->first();
