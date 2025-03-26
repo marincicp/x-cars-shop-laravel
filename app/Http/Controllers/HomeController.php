@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,7 @@ class HomeController extends Controller
         $this->dropdownCachedData = DropdownController::getDropdownData();
     }
 
-    public  function index()
+    public  function index(): View
     {
         $favoriteCars = [];
         $cars = Car::with(["carType", "fuelType", "maker", "model",  "city", "primaryImage"])->where("published_at", "<", now())->orderBy("published_at", "desc")->paginate(15);
