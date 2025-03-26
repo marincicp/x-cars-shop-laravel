@@ -24,10 +24,10 @@ class StoreUserRegisterForm extends FormRequest
     {
         return [
             "email" => ["email", "required", "unique:users,email"],
-            "password" => ["required", "confirmed", Password::min(3)],
-            "firstName" =>  ["required", "string"],
-            "lastName" => ["required", "string"],
-            'phone' => 'nullable|regex:/^[0-9]{10,15}$/',
+            "password" => ["required", "confirmed", Password::default()],
+            "firstName" =>  ["required", "string", "min:2", "max:100"],
+            "lastName" => ["required", "string", "min:2", "max:100"],
+            'phone' => ['nullable', 'regex:/^[0-9]{10,15}$/'],
         ];
     }
 }

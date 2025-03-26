@@ -25,14 +25,14 @@ class StoreCarRequest extends FormRequest
      */
     public function rules(): array
     {
-
+        // Todo uncomment vin filed
         return  [
             "maker_id" => ["required", "integer", "min:1", "exists:makers,id"],
             "model_id" => ["required", "integer", "min:1", "exists:models,id"],
             "year" => ["required", "integer", "min:1990", "max:" . date("Y")],
             "car_type_id" => ["required", "integer", "min:1", "exists:car_types,id"],
             "city_id" => ["required", "integer", "min:1", "exists:cities,id"],
-            // "vin" => ["required", "size:2"],
+            // "vin" => ["required", "string", "size:17"],
             "vin" => ["nullable"],
             "mileage" => ["required", "integer", "min:0"],
             "price" => ["required", "integer", "min:0"],

@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules\Password as PasswordRules;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -40,7 +41,7 @@ class NewPasswordController extends Controller
         $request->validate([
             "token" => ["required"],
             "email" => ["email", "required"],
-            "password" => ["required", "min:3", "confirmed"]
+            "password" => ["required", "string", "confirmed", PasswordRules::default()]
 
         ]);
 
