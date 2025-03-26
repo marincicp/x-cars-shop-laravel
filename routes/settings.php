@@ -4,7 +4,7 @@ use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware("auth")->group(function () {
+Route::middleware(["auth", "verified"])->group(function () {
    Route::get("/settings/change-password", [PasswordController::class, "edit"])->name("password.edit");
    Route::put("/settings/change-password", [PasswordController::class, "update"])->name("password.update");
 
