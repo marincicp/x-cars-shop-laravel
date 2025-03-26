@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware("auth")->group(function () {
+Route::middleware(["auth", "verified"])->group(function () {
 
    Route::controller(CarController::class)->group(function () {
       Route::get("car", "index")->name("car.index");
