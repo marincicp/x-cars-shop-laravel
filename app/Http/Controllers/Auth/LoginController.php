@@ -91,7 +91,13 @@ class LoginController extends Controller
         };
 
         Auth::login($user);
+
         $request->session()->regenerate();
+
+        if (! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
+
         return redirect("/");
     }
 }
