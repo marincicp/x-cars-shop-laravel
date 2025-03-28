@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Car;
 
+use App\Events\WatchlistedCar;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\CarRepository;
 use App\Models\Car;
@@ -38,6 +39,8 @@ class WatchlistCarController extends Controller
             return back();
         }
 
+        event(new WatchlistedCar($car));
+
         return back()->with("message.success", "Car successfully added to watchlist");
     }
 
@@ -54,7 +57,6 @@ class WatchlistCarController extends Controller
         if (! $res) {
             return back();
         }
-
         return back()->with("message.success", "Car successfully removed from watchlist");
     }
 }

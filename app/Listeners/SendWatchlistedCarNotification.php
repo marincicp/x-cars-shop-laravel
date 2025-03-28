@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\WatchlistedCar;
+use App\Jobs\SendWatchlistedCarNotificationJob;
 use App\Mail\WatchlistedCarMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -23,7 +24,7 @@ class SendWatchlistedCarNotification
      */
     public function handle(WatchlistedCar $event): void
     {
-        $owner = $event->car->owner;
-        Mail::to($owner->email)->send(new WatchlistedCarMail($event->car));
+
+        SendWatchlistedCarNotificationJob::dispatch($event->car);
     }
 }
