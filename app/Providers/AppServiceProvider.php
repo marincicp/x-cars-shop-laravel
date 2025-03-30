@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Model::shouldBeStrict();
+
         Paginator::defaultView("pagination");
 
         Gate::define("car-update", [CarPolicy::class, "update"]);
