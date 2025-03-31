@@ -29,7 +29,7 @@
                                         </td>
 
                                         <td>{{ $car->getCreateDate() }}</td>
-                                        <td>{{ $car->published_at ? 'Yes' : 'No' }}</td>
+                                        <td>{{ $car->published_at < now() ? 'Yes' : 'No' }}</td>
                                         <td class="">
                                             <a href="{{ route('car.edit', $car) }}"
                                                 class="btn btn-edit inline-flex items-center">

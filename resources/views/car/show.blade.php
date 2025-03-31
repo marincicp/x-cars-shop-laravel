@@ -4,7 +4,9 @@
         <x-alert />
         <div class="container">
             <h1 class="car-details-page-title">{{ $car->maker->name }} {{ $car->model->name }} - {{ $car->year }}</h1>
-            <div class="car-details-region">{{ $car->city->name }} - {{ $car->published_at }}</div>
+            <div class="car-details-region">Published: {{ $car->city->name }} -
+                {{ date('Y-m-d', strtotime($car->published_at)) }}
+            </div>
 
             <div class="car-details-content">
                 <div class="car-images-and-description">
