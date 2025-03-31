@@ -9,6 +9,8 @@ use App\Http\Repositories\CarRepository;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
 use App\Models\Car;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,9 +28,10 @@ class CarController extends Controller
 
 
     /**
-     * Display a listing of the resource.
+     * Show all cars added by authenticated user
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $cars = $this->carRepo->getCurrentUserAddedCars();
 
@@ -36,15 +39,15 @@ class CarController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the create car page.
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         return view("car.create", array_merge($this->dropdownCachedData, ["carFeatures" => CarFeatures::FEATURES]));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created car in the database
      */
     public function store(StoreCarRequest $request)
     {
@@ -58,7 +61,9 @@ class CarController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     *  Display the car details
+     * @param \App\Models\Car $car
+     * @return View
      */
     public function show(Car $car)
     {
@@ -67,10 +72,14 @@ class CarController extends Controller
         return view("car.show", ["car" => $car, "isInWatchList" => $isInWatchList]);
     }
 
+
+
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the car
+     * @param \App\Models\Car $car
+     * @return View
      */
-    public function edit(Car $car)
+    public function edit(Car $car): View
     {
 
         $models = $car->maker->models;
@@ -82,9 +91,12 @@ class CarController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Handle the request to update a car in the database
+     * @param \App\Http\Requests\UpdateCarRequest $request
+     * @param \App\Models\Car $car
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateCarRequest $request,  Car $car)
+    public function update(UpdateCarRequest $request,  Car $car): RedirectResponse
     {
         $validatedData = $request->validated();
         $this->carRepo->updateCar($car, $validatedData);
@@ -93,9 +105,11 @@ class CarController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Handle the request to delete a car in the database
+     * @param \App\Models\Car $car
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Car $car)
+    public function destroy(Car $car): RedirectResponse
     {
         $this->carRepo->deleteCar($car);
 
