@@ -19,12 +19,4 @@ return new class extends Migration
             $table->timestamp("deleted_at")->nullable();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('car_images');
-    }
 };
