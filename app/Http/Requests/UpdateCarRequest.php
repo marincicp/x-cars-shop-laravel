@@ -39,7 +39,7 @@ class UpdateCarRequest extends FormRequest
             "address" => ["required", "string", "min:5", "max:150"],
             "description" => ["required", "string", "min:2", "max:500"],
             "phone" => ["required", "regex:/^\+?\d{7,15}$/"],
-
+            "published_at" => ["date", "required"],
             "car_features" => ["nullable", "array"],
             "car_features.*" =>  [
                 function ($attribute, $value, $fail) {
