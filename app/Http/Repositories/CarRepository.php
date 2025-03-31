@@ -42,7 +42,7 @@ class CarRepository
    {
       return DB::transaction(function () use ($car, $data) {
 
-         $car->update($data);
+         $car->update(Arr::except($data, ["car_features"]));
 
          $car->features()->delete();
          if (!empty($data["car_features"])) {
