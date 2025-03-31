@@ -6,6 +6,7 @@ namespace App\Http\Repositories;
 use App\Filters\QueryFilter;
 use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,7 @@ class CarRepository
    {
       return DB::transaction(function () use ($data) {
 
-         $car = Auth::user()->cars()->create($data);
+         $car = Auth::user()->cars()->create(Arr::except($data, ["images", "car_features"]));
 
          foreach ($data["images"] as $index => $img) {
             $imgPath = $img->store("carImages");
