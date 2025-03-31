@@ -28,7 +28,8 @@ class Car extends EloquentModel
         'fuel_type_id',
         'address',
         'description',
-        'phone'
+        'phone',
+        "published_at"
     ];
 
     public function fuelType(): BelongsTo
