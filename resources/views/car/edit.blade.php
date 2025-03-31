@@ -112,11 +112,16 @@
                             <label>Detailed Description</label>
                             <textarea name="description" rows="10">{!! $car->description !!}</textarea>
                         </div>
+
                         <div class="form-group">
                             <label class="checkbox">
-                                <input type="checkbox" name="published" />
-                                Published
+                                Select a publication date
                             </label>
+                            <input type="date" name="published_at"
+                                value="{{ date('Y-m-d', strtotime($car->published_at)) }}"
+                                min="{{ date('Y-m-d') }}" />
+
+
                         </div>
                     </div>
                     <div class="form-images">
