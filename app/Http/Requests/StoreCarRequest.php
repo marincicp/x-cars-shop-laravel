@@ -40,7 +40,7 @@ class StoreCarRequest extends FormRequest
             "address" => ["required", "string"],
             "description" => ["required", "max:500"],
             "phone" => ["required", "regex:/^\+?\d{7,15}$/"],
-
+            "published_at" => ["required", "date", "after_or_equal:today"],
             "car_features" => ["nullable", "array"],
             "car_features.*" =>  [
                 function ($attribute, $value, $fail) {
