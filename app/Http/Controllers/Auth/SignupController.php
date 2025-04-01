@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRegisterForm;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -32,10 +33,10 @@ class SignupController extends Controller
      */
     public function store(StoreUserRegisterForm $request)
     {
-
         $userData = $request->validated();
         $userData["name"] = $userData["firstName"] . " " . $userData["lastName"];
-        $user = User::create($userData);
+
+        $user = User::create(Arr::except($userData, ["firstName", "lastName"]));
 
         Auth::login($user);
 
