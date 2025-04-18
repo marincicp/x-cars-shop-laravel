@@ -73,6 +73,10 @@ class Car extends EloquentModel
         return $this->hasOne(CarFeatures::class);
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(CarComment::class);
+    }
 
     public function primaryImage(): HasOne
     {
@@ -90,8 +94,6 @@ class Car extends EloquentModel
 
     public function getCreateDate(): string
     {
-
-
         return (new Carbon($this->created_at))->format("Y-m-d");
     }
 }

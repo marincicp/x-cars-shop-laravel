@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Model;
+use App\Policies\CarCommentPolicy;
 use App\Policies\CarPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Pagination\Paginator;
@@ -25,10 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::shouldBeStrict();
-
         Paginator::defaultView("pagination");
-
         Gate::define("car-update", [CarPolicy::class, "update"]);
         Gate::define("user-update", [UserPolicy::class, "update"]);
+        Gate::define("comment-delete", [CarCommentPolicy::class, "delete"]);
     }
 }

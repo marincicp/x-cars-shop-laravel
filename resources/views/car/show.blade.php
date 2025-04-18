@@ -49,6 +49,16 @@
                         <x-car-feature-specifications :car="$car" />
 
                     </div>
+
+                    @auth
+                        <div class="card car-detailed-description">
+                            <h2 class="car-details-title">Leave a comments</h2>
+                            <x-car-comment-form :$car />
+                        </div>
+                    @endauth
+
+                    <x-car-comments-show :comments="$comments" />
+
                 </div>
                 <div class="car-details card">
                     <div class="flex items-center justify-between">

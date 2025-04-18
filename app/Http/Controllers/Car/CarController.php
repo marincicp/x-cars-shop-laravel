@@ -68,8 +68,10 @@ class CarController extends Controller
     public function show(Car $car)
     {
 
+        $comments = $car->comments()->with("user")->latest()->paginate(5);
+
         $isInWatchList = $this->carRepo->isFavoriteCar($car);
-        return view("car.show", ["car" => $car, "isInWatchList" => $isInWatchList]);
+        return view("car.show", ["car" => $car, "isInWatchList" => $isInWatchList, "comments" => $comments]);
     }
 
 

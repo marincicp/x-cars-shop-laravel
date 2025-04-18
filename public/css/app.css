@@ -37,6 +37,17 @@
     box-sizing: border-box;
 }
 
+.comment-box {
+    /* background-color: var(--default-button-border-color); */
+    border: 1px solid var(--primary-color);
+    /* border: 1px solid var(--default-button-color); */
+    border-radius: 10px;
+    padding: 4px 6px;
+}
+
+.comment-owner {
+}
+
 .alert {
     position: absolute;
     top: -10px;
@@ -99,6 +110,10 @@ hr {
 /* .form-group-checkbox label {
   width: 33%;
 } */
+
+.italic {
+    font-style: italic;
+}
 
 .form-group label {
     display: block;
