@@ -6,10 +6,10 @@
         <div>
             <span class="text-muted">{{ $comment->created_at }}</span>
             @can('comment-delete', $comment)
-                <form action="{{ route('comment.destroy', $comment) }}" method="DELETE">
-
+                <x-form.form method="POST" extraMethod="DELETE" action="{{ route('comment.destroy', $comment) }}">
+                    @csrf
                     <button class="btn btn-primary btn-submit">Delete</button>
-                </form>
+                </x-form.form>
             @endcan
         </div>
     </div>
