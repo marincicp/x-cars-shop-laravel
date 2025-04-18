@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CarImageApiController;
+use App\Http\Controllers\Car\CarCommentController;
 use App\Http\Controllers\Car\CarController;
 use App\Http\Controllers\Car\CarImageController;
 use App\Http\Controllers\Car\CarSearchController;
@@ -10,19 +11,25 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(["auth", "verified"])->group(function () {
+   Route::controller(CarController::class)->group(
+      function () {
+         Route::get("car", "index")->name("car.index");
+         Route::get("car/create", "create")->name("car.create");
+         Route::post("car", "store")->name("car.store");
+         Route::delete("car/{car}", "destroy")->name("car.destroy")->can("delete", "car");
+         // Route::post("car/{car}", "show")->name("car.show");
+         Route::put("cars/{car}", "update")->name("car.update")->can("update", "car");
+         Route::get("car/{car}/edit", "edit")->name("car.edit");
+      }
 
-   Route::controller(CarController::class)->group(function () {
-      Route::get("car", "index")->name("car.index");
-      Route::get("car/create", "create")->name("car.create");
-      Route::post("car", "store")->name("car.store");
-      Route::delete("car/{car}", "destroy")->name("car.destroy")->can("delete", "car");
-      // Route::post("car/{car}", "show")->name("car.show");
-      Route::put("cars/{car}", "update")->name("car.update")->can("update", "car");
-
-      Route::get("car/{car}/edit", "edit")->name("car.edit");
-   });
 
 
+   );
+
+   Route::delete("comment/{comment}", [CarCommentController::class, "destroy"])->name("comment.destroy")
+      ->can("comment-delete", "comment");
+
+   Route::post("car/{car}/comment", [CarCommentController::class, "store"])->name("comment.store");
 
 
 
