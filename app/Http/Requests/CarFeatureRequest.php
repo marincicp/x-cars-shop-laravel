@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Schema;
-
-use App\Constants\CarFeatures;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class CarFeatureRequest extends FormRequest
 {
@@ -25,22 +22,20 @@ class CarFeatureRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
 
-
-
     // TODO zavrsiti
     public function rules(): array
     {
         return [
-            "car_features" => ["nullable", "array"],
+            'car_features' => ['nullable', 'array'],
 
-            "car_features.*" =>  [
+            'car_features.*' => [
                 function ($attribute, $value, $fail) {
                     $column = Str::afterLast($attribute, '.');
-                    if (! Schema::hasColumn("car_features", $column)) {
+                    if (! Schema::hasColumn('car_features', $column)) {
                         $fail("The $column does not exist");
                     }
-                }
-            ]
+                },
+            ],
         ];
     }
 }

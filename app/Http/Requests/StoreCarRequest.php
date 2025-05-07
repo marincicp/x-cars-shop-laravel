@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\File;
 
 class StoreCarRequest extends FormRequest
@@ -26,33 +26,33 @@ class StoreCarRequest extends FormRequest
     public function rules(): array
     {
         // Todo uncomment vin filed
-        return  [
-            "maker_id" => ["required", "integer", "min:1", "exists:makers,id"],
-            "model_id" => ["required", "integer", "min:1", "exists:models,id"],
-            "year" => ["required", "integer", "min:1990", "max:" . date("Y")],
-            "car_type_id" => ["required", "integer", "min:1", "exists:car_types,id"],
-            "city_id" => ["required", "integer", "min:1", "exists:cities,id"],
+        return [
+            'maker_id' => ['required', 'integer', 'min:1', 'exists:makers,id'],
+            'model_id' => ['required', 'integer', 'min:1', 'exists:models,id'],
+            'year' => ['required', 'integer', 'min:1990', 'max:'.date('Y')],
+            'car_type_id' => ['required', 'integer', 'min:1', 'exists:car_types,id'],
+            'city_id' => ['required', 'integer', 'min:1', 'exists:cities,id'],
             // "vin" => ["required", "string", "size:17"],
-            "vin" => ["nullable"],
-            "mileage" => ["required", "integer", "min:0"],
-            "price" => ["required", "integer", "min:0"],
-            "fuel_type_id" => ["required", "integer", "min:1", "exists:fuel_types,id"],
-            "address" => ["required", "string"],
-            "description" => ["required", "max:500"],
-            "phone" => ["required", "regex:/^\+?\d{7,15}$/"],
-            "published_at" => ["required", "date", "after_or_equal:today"],
-            "car_features" => ["nullable", "array"],
-            "car_features.*" =>  [
+            'vin' => ['nullable'],
+            'mileage' => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'integer', 'min:0'],
+            'fuel_type_id' => ['required', 'integer', 'min:1', 'exists:fuel_types,id'],
+            'address' => ['required', 'string'],
+            'description' => ['required', 'max:500'],
+            'phone' => ['required', "regex:/^\+?\d{7,15}$/"],
+            'published_at' => ['required', 'date', 'after_or_equal:today'],
+            'car_features' => ['nullable', 'array'],
+            'car_features.*' => [
                 function ($attribute, $value, $fail) {
                     $column = Str::afterLast($attribute, '.');
-                    if (! Schema::hasColumn("car_features", $column)) {
+                    if (! Schema::hasColumn('car_features', $column)) {
                         $fail("The $column does not exist");
                     }
-                }
+                },
             ],
 
-            "images" => ["required"],
-            "images.*" => ["required", File::types(["png", "jpg", "webp"])]
+            'images' => ['required'],
+            'images.*' => ['required', File::types(['png', 'jpg', 'webp'])],
         ];
     }
 }

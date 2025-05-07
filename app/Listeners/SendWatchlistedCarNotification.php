@@ -4,10 +4,6 @@ namespace App\Listeners;
 
 use App\Events\WatchlistedCar;
 use App\Jobs\SendWatchlistedCarNotificationJob;
-use App\Mail\WatchlistedCarMail;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
 
 class SendWatchlistedCarNotification
 {

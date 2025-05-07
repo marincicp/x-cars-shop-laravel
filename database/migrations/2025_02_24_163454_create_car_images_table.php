@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('car_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("car_id")->constrained("cars")->cascadeOnDelete();
-            $table->string("image_path", 255);
-            $table->integer("position");
-            $table->timestamp("deleted_at")->nullable();
+            $table->foreignId('car_id')->constrained('cars')->cascadeOnDelete();
+            $table->string('image_path', 255);
+            $table->integer('position');
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 };

@@ -12,9 +12,9 @@ class ModelApiController extends Controller
      */
     public function getModelsByMaker(string $id)
     {
-        $maker = Maker::with("models")->find($id);
+        $maker = Maker::with('models')->find($id);
 
-        if (!$maker) {
+        if (! $maker) {
             return response()->json(['error' => 'Maker not found'], 404);
         }
 

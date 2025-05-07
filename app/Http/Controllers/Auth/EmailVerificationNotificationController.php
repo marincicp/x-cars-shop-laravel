@@ -8,20 +8,19 @@ use Illuminate\Http\Request;
 
 class EmailVerificationNotificationController extends Controller
 {
-
     /**
      * Send a new email verification notification
-     * @param \Illuminate\Http\Request $request
+     *
      * @return mixed|\Illuminate\Http\RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return  redirect()->intended(route("home"));
+            return redirect()->intended(route('home'));
         }
 
         $request->user()->sendEmailVerificationNotification();
 
-        return back()->with("message.success", "Verficiation link sent!");
+        return back()->with('message.success', 'Verficiation link sent!');
     }
 }

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 
-
 class DeleteCarImageRequest extends FormRequest
 {
     /**
@@ -16,16 +15,15 @@ class DeleteCarImageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $car =   Car::find($this->request->get("car_id"));
+        $car = Car::find($this->request->get('car_id'));
 
-        if (!$car) {
+        if (! $car) {
             return false;
         }
 
-        $imageExists = $car->images()->where("id", $this->request->get("image_id"))->exists();
+        $imageExists = $car->images()->where('id', $this->request->get('image_id'))->exists();
 
-
-        return $imageExists && Gate::allows("car-update", $car);
+        return $imageExists && Gate::allows('car-update', $car);
     }
 
     /**
@@ -36,11 +34,10 @@ class DeleteCarImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "car_id" => ["required", "min:1", "string"],
-            "image_id" => ["required", "min:1", "string"]
+            'car_id' => ['required', 'min:1', 'string'],
+            'image_id' => ['required', 'min:1', 'string'],
         ];
     }
-
 
     public function after()
     {
@@ -50,14 +47,14 @@ class DeleteCarImageRequest extends FormRequest
                     return;
                 }
 
-                $car = Car::find($this->request->get("car_id"));
+                $car = Car::find($this->request->get('car_id'));
 
                 if ($car->images()->count() === 1) {
                     throw ValidationException::withMessages([
                         'car_id' => 'Car must have minimum one image.',
                     ]);
                 }
-            }
+            },
         ];
     }
 }

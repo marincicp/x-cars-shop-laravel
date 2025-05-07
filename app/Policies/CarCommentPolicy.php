@@ -15,8 +15,6 @@ class CarCommentPolicy
         //
     }
 
-
-
     public function delete(User $user, CarComment $comment): bool
     {
         return $user->id === $comment->user_id;

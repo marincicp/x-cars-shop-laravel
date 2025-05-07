@@ -11,24 +11,18 @@ use Illuminate\Http\RedirectResponse;
 
 class CarImageController extends Controller
 {
-
-
     public function __construct(protected CarImageRepository $carImageRepo) {}
 
     /**
      * Display car image form.
-     * @return View
      */
     public function editImages(Car $car): View
     {
-        return view("car.edit-images", ["car" => $car]);
+        return view('car.edit-images', ['car' => $car]);
     }
-
-
 
     /**
      * Change the order of car images
-     * @return RedirectResponse
      */
     public function updateImages(UpdateCarImagesRequest $request, Car $car): RedirectResponse
     {
@@ -37,9 +31,8 @@ class CarImageController extends Controller
 
         $this->carImageRepo->updateCarImageOrder($car, $validatedData);
 
-
-        return to_route("car.index")->with([
-            "message.success" => "Car images successfully updated."
+        return to_route('car.index')->with([
+            'message.success' => 'Car images successfully updated.',
         ]);
     }
 }

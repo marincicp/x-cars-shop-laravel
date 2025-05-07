@@ -10,15 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class City extends Model
 {
     use HasFactory;
-    public $timestamps = false;
 
+    public $timestamps = false;
 
     public function state(): BelongsTo
     {
 
         return $this->belongsTo(State::class);
     }
-
 
     public function cars(): HasMany
     {

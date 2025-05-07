@@ -7,14 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CarComment extends Model
 {
-
-
-    protected $fillable = ["user_id", "comment"];
+    protected $fillable = ['user_id', 'comment'];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+
     public function car(): BelongsTo
     {
         return $this->belongsTo(Car::class);

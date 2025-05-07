@@ -6,7 +6,6 @@ use App\Mail\WatchlistedCarMail;
 use App\Models\Car;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendWatchlistedCarNotificationJob implements ShouldQueue

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('car_id')->constrained('cars');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
-            $table->timestamp("deleted_at")->nullable();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 };

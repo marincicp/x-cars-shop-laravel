@@ -13,35 +13,32 @@ use Illuminate\View\View;
 
 class SignupController extends Controller
 {
-
-
-
     /**
      * Show the signup page
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function create(): View
     {
-        return view("auth.signup");
+        return view('auth.signup');
     }
 
-
     /**
-     * Handle an incoming registration request 
-     * @param \App\Http\Requests\StoreUserRegisterForm $request
+     * Handle an incoming registration request
+     *
      * @return RedirectResponse
      */
     public function store(StoreUserRegisterForm $request)
     {
         $userData = $request->validated();
-        $userData["name"] = $userData["firstName"] . " " . $userData["lastName"];
+        $userData['name'] = $userData['firstName'].' '.$userData['lastName'];
 
-        $user = User::create(Arr::except($userData, ["firstName", "lastName"]));
+        $user = User::create(Arr::except($userData, ['firstName', 'lastName']));
 
         Auth::login($user);
 
         event(new Registered($user));
 
-        return to_route("verification.notice");
+        return to_route('verification.notice');
     }
 }

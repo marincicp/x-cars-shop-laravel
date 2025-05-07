@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Maker extends EloquentModel
 {
     use HasFactory;
+
     public $timestamps = false;
-
-
 
     public function cars(): HasMany
     {

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fuel_types', function (Blueprint $table) {
             $table->id();
-            $table->string("name", 45);
+            $table->string('name', 45);
         });
     }
 };

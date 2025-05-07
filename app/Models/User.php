@@ -24,8 +24,8 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         'name',
         'email',
         'password',
-        "phone",
-        "google_id"
+        'phone',
+        'google_id',
     ];
 
     /**
@@ -51,18 +51,16 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         ];
     }
 
-
     public function favoriteCars(): BelongsToMany
     {
 
-        return $this->belongsToMany(Car::class, "favorite_cars");
+        return $this->belongsToMany(Car::class, 'favorite_cars');
     }
 
     public function cars(): HasMany
     {
         return $this->hasMany(Car::class);
     }
-
 
     public function comments(): HasMany
     {

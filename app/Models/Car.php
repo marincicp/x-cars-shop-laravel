@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Car extends EloquentModel
@@ -29,7 +28,7 @@ class Car extends EloquentModel
         'address',
         'description',
         'phone',
-        "published_at"
+        'published_at',
     ];
 
     public function fuelType(): BelongsTo
@@ -52,10 +51,9 @@ class Car extends EloquentModel
         return $this->belongsTo(Model::class);
     }
 
-
     public function owner(): BelongsTo
     {
-        return $this->belongsTo(User::class, "user_id");
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function city(): BelongsTo
@@ -63,11 +61,11 @@ class Car extends EloquentModel
         return $this->belongsTo(City::class);
     }
 
-
     public function favoritedCars(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, "favorite_cars");
+        return $this->belongsToMany(User::class, 'favorite_cars');
     }
+
     public function features(): HasOne
     {
         return $this->hasOne(CarFeatures::class);
@@ -81,19 +79,16 @@ class Car extends EloquentModel
     public function primaryImage(): HasOne
     {
 
-        return $this->hasOne(CarImage::class)->oldestOfMany("position");
+        return $this->hasOne(CarImage::class)->oldestOfMany('position');
     }
-
-
 
     public function images(): HasMany
     {
-        return $this->hasMany(CarImage::class)->orderBy("position");
+        return $this->hasMany(CarImage::class)->orderBy('position');
     }
-
 
     public function getCreateDate(): string
     {
-        return (new Carbon($this->created_at))->format("Y-m-d");
+        return (new Carbon($this->created_at))->format('Y-m-d');
     }
 }

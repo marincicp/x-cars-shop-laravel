@@ -12,13 +12,10 @@ use App\Models\Car;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CarController extends Controller
 {
-
     private array $dropdownCachedData;
-
 
     public function __construct(protected CarRepository $carRepo)
     {
@@ -26,16 +23,14 @@ class CarController extends Controller
         $this->dropdownCachedData = DropdownController::getDropdownData();
     }
 
-
     /**
      * Show all cars added by authenticated user
-     * @return View
      */
     public function index(): View
     {
         $cars = $this->carRepo->getCurrentUserAddedCars();
 
-        return view("car.index", ["cars" => $cars]);
+        return view('car.index', ['cars' => $cars]);
     }
 
     /**
@@ -43,7 +38,7 @@ class CarController extends Controller
      */
     public function create(Request $request): View
     {
-        return view("car.create", array_merge($this->dropdownCachedData, ["carFeatures" => CarFeatures::FEATURES]));
+        return view('car.create', array_merge($this->dropdownCachedData, ['carFeatures' => CarFeatures::FEATURES]));
     }
 
     /**
@@ -55,31 +50,28 @@ class CarController extends Controller
 
         $car = $this->carRepo->createCar($validatedData);
 
-        return to_route("car.show", $car)->with([
-            "message.success" => "Car successfully created."
+        return to_route('car.show', $car)->with([
+            'message.success' => 'Car successfully created.',
         ]);
     }
 
     /**
      *  Display the car details
-     * @param \App\Models\Car $car
+     *
      * @return View
      */
     public function show(Car $car)
     {
 
-        $comments = $car->comments()->with("user")->latest()->paginate(5);
+        $comments = $car->comments()->with('user')->latest()->paginate(5);
 
         $isInWatchList = $this->carRepo->isFavoriteCar($car);
-        return view("car.show", ["car" => $car, "isInWatchList" => $isInWatchList, "comments" => $comments]);
+
+        return view('car.show', ['car' => $car, 'isInWatchList' => $isInWatchList, 'comments' => $comments]);
     }
-
-
 
     /**
      * Show the form for editing the car
-     * @param \App\Models\Car $car
-     * @return View
      */
     public function edit(Car $car): View
     {
@@ -89,34 +81,30 @@ class CarController extends Controller
         $currentMakerModels = $car->model->maker->models;
         $carFeatures = CarFeatures::FEATURES;
 
-        return view("car.edit", array_merge(compact("car", "models", "currentStateCities", "currentMakerModels", "carFeatures"), $this->dropdownCachedData));
+        return view('car.edit', array_merge(compact('car', 'models', 'currentStateCities', 'currentMakerModels', 'carFeatures'), $this->dropdownCachedData));
     }
 
     /**
      * Handle the request to update a car in the database
-     * @param \App\Http\Requests\UpdateCarRequest $request
-     * @param \App\Models\Car $car
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateCarRequest $request,  Car $car): RedirectResponse
+    public function update(UpdateCarRequest $request, Car $car): RedirectResponse
     {
         $validatedData = $request->validated();
         $this->carRepo->updateCar($car, $validatedData);
 
-        return to_route("car.index")->with(["message.success" => "Car successfully updated."]);
+        return to_route('car.index')->with(['message.success' => 'Car successfully updated.']);
     }
 
     /**
      * Handle the request to delete a car in the database
-     * @param \App\Models\Car $car
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Car $car): RedirectResponse
     {
         $this->carRepo->deleteCar($car);
 
-        session()->flash("message", "Car successfully deleted.");
+        session()->flash('message', 'Car successfully deleted.');
+
         // return to_route("car.index")->with(["message" => "Car successfully deleted.", "type" => "success"]);
-        return to_route("car.index");
+        return to_route('car.index');
     }
 }

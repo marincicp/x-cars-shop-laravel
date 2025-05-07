@@ -4,13 +4,9 @@ namespace App\Policies;
 
 use App\Models\Car;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CarPolicy
 {
-
-
-
     /**
      * Determine whether the user can update the model.
      */
@@ -27,8 +23,6 @@ class CarPolicy
 
         return $user->id === $car->owner->id;
     }
-
-
 
     public function isOwner(User $user, Car $car)
     {

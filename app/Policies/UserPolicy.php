@@ -12,8 +12,6 @@ class UserPolicy
      */
     public function __construct() {}
 
-
-
     public function update(User $user)
     {
 

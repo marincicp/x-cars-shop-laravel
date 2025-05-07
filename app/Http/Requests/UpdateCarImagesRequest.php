@@ -13,8 +13,9 @@ class UpdateCarImagesRequest extends FormRequest
     public function authorize(): bool
     {
 
-        $car = $this->route("car");
-        return Gate::allows("car-update", $car);
+        $car = $this->route('car');
+
+        return Gate::allows('car-update', $car);
     }
 
     /**
@@ -25,8 +26,8 @@ class UpdateCarImagesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "images" => ["array", "required"],
-            "images.*" =>  ["required", "string"],
+            'images' => ['array', 'required'],
+            'images.*' => ['required', 'string'],
         ];
     }
 }

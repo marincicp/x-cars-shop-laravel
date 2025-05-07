@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Repositories;
 
 use App\Filters\QueryFilter;
@@ -12,121 +11,107 @@ use Illuminate\Support\Facades\DB;
 
 class CarRepository
 {
+    public function createCar($data)
+    {
+        return DB::transaction(function () use ($data) {
 
-   public  function createCar($data)
-   {
-      return DB::transaction(function () use ($data) {
+            $car = Auth::user()->cars()->create(Arr::except($data, ['images', 'car_features']));
 
-         $car = Auth::user()->cars()->create(Arr::except($data, ["images", "car_features"]));
+            foreach ($data['images'] as $index => $img) {
+                $imgPath = $img->store('carImages');
+                $car->images()->create([
+                    'image_path' => $imgPath,
+                    'position' => $index + 1,
+                ]);
+            }
 
-         foreach ($data["images"] as $index => $img) {
-            $imgPath = $img->store("carImages");
-            $car->images()->create([
-               "image_path" => $imgPath,
-               "position" => $index + 1
-            ]);
-         }
+            if (! empty($data['car_features'])) {
+                $car->features()->create($data['car_features']);
+            }
 
-         if (!empty($data["car_features"])) {
-            $car->features()->create($data["car_features"]);
-         }
+            return $car;
+        });
+    }
 
-         return $car;
-      });
-   }
+    public function updateCar(Car $car, $data)
+    {
+        return DB::transaction(function () use ($car, $data) {
 
+            $car->update(Arr::except($data, ['car_features']));
 
+            $car->features()->delete();
+            if (! empty($data['car_features'])) {
+                $car->features()->create($data['car_features']);
+            }
 
+            return $car;
+        });
+    }
 
-   public function updateCar(Car $car, $data)
-   {
-      return DB::transaction(function () use ($car, $data) {
+    /**
+     * Get a list of cars that the current user has added
+     */
+    public function getCurrentUserAddedCars()
+    {
+        return Auth::user()->cars()->with(['primaryImage', 'model', 'maker'])->orderBy('created_at', 'desc')->paginate(15);
+    }
 
-         $car->update(Arr::except($data, ["car_features"]));
+    /**
+     * Get a list of cars that the current user marked as favorite
+     */
+    public function getCurrentUserFavoriteCars()
+    {
+        return Auth::user()->favoriteCars()->with(['carType', 'fuelType', 'maker', 'model',  'city', 'primaryImage'])->paginate(15);
+    }
 
-         $car->features()->delete();
-         if (!empty($data["car_features"])) {
-            $car->features()->create($data["car_features"]);
-         }
+    /**
+     * Get a list of cars filtered by query parameters.
+     */
+    public function getCarsByQueryParams(Request $request)
+    {
 
-         return $car;
-      });
-   }
+        $query = Car::select('cars.*')->with('model', 'maker', 'carType', 'primaryImage', 'city', 'fuelType')->where('published_at', '<', now());
 
+        return QueryFilter::apply($query, $request)->paginate(15);
+    }
 
+    public function deleteCar(Car $car)
+    {
 
-   /**
-    * Get a list of cars that the current user has added
-    */
-   public function  getCurrentUserAddedCars()
-   {
-      return Auth::user()->cars()->with(["primaryImage", "model", "maker"])->orderBy("created_at", "desc")->paginate(15);
-   }
+        return DB::transaction(function () use ($car) {
+            $car->features()->delete();
+            $res = $car->deleteOrFail();
+        });
+    }
 
+    public function isFavoriteCar(Car $car)
+    {
+        if (Auth::check()) {
+            return $car->favoritedCars()->where('user_id', Auth::user()->id)->exists();
+        }
 
+        return false;
+    }
 
-   /**
-    * Get a list of cars that the current user marked as favorite
-    */
-   public function getCurrentUserFavoriteCars()
-   {
-      return Auth::user()->favoriteCars()->with(["carType", "fuelType", "maker", "model",  "city", "primaryImage"])->paginate(15);
-   }
+    public function addToWatchilst(Car $car)
+    {
+        if ($this->isFavoriteCar($car)) {
+            return false;
+        }
 
+        $car->favoritedCars()->attach(['user_id' => Auth::user()->id]);
 
+        return true;
+    }
 
-   /**
-    * Get a list of cars filtered by query parameters.
-    */
+    public function removeFromWatchlist(Car $car)
+    {
 
-   public function getCarsByQueryParams(Request $request)
-   {
+        if (! $this->isFavoriteCar($car)) {
+            return false;
+        }
+        $car->favoritedCars()->detach(Auth::user()->id);
 
-      $query = Car::select("cars.*")->with("model", "maker", "carType", "primaryImage", "city", "fuelType")->where("published_at", "<", now());
-
-      return QueryFilter::apply($query, $request)->paginate(15);
-   }
-
-
-   public function deleteCar(Car $car)
-   {
-
-      return DB::transaction(function () use ($car) {
-         $car->features()->delete();
-         $res =  $car->deleteOrFail();
-      });
-   }
-
-
-
-   public function isFavoriteCar(Car $car)
-   {
-      if (Auth::check()) {
-         return $car->favoritedCars()->where("user_id", Auth::user()->id)->exists();
-      }
-
-      return false;
-   }
-
-   public function addToWatchilst(Car $car)
-   {
-      if ($this->isFavoriteCar($car)) {
-         return false;
-      }
-
-      $car->favoritedCars()->attach(["user_id" => Auth::user()->id]);
-
-      return true;
-   }
-
-   public function removeFromWatchlist(Car $car)
-   {
-
-      if (! $this->isFavoriteCar($car)) {
-         return false;
-      }
-      $car->favoritedCars()->detach(Auth::user()->id);
-
-      return true;
-   }
+        return true;
+    }
 }

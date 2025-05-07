@@ -10,11 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CarImage extends Model
 {
     use HasFactory, SoftDeletes;
+
     public $timestamps = false;
-    protected $fillable = ["image_path", "position"];
 
-
-
+    protected $fillable = ['image_path', 'position'];
 
     public function car(): BelongsTo
     {

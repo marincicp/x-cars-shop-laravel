@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class CarType extends Model
 {
     use HasFactory;
-    public $timestamps = false;
 
+    public $timestamps = false;
 
     public function cars(): HasMany
     {

@@ -26,9 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::shouldBeStrict();
-        Paginator::defaultView("pagination");
-        Gate::define("car-update", [CarPolicy::class, "update"]);
-        Gate::define("user-update", [UserPolicy::class, "update"]);
-        Gate::define("comment-delete", [CarCommentPolicy::class, "delete"]);
+        Paginator::defaultView('pagination');
+        Gate::define('car-update', [CarPolicy::class, 'update']);
+        Gate::define('user-update', [UserPolicy::class, 'update']);
+        Gate::define('comment-delete', [CarCommentPolicy::class, 'delete']);
     }
 }
